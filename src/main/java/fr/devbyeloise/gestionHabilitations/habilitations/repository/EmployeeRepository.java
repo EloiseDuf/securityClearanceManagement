@@ -1,25 +1,21 @@
 package fr.devbyeloise.gestionHabilitations.habilitations.repository;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import org.apache.commons.dbcp2.BasicDataSource;
+import javax.sql.DataSource;
 
-import com.mysql.cj.jdbc.MysqlDataSource;
+import fr.devbyeloise.gestionHabilitations.habilitations.DataSourceProvider;
+import fr.devbyeloise.gestionHabilitations.habilitations.modele.Employee;
 
-public class Connexion {
-    public static void main(String... args){
+public class EmployeeRepository {
+	public void readAll (Employee employee){
         Connection conn = null;
         try {
         	
-        	BasicDataSource dataSource = new BasicDataSource();
-        	dataSource.setInitialSize(5);
-        	dataSource.setUrl("jdbc:mysql://localhost:3306/habilitations?useSSL=false&useLegacyDatetimeCode=false&serverTimezone=Europe/Paris");
-        	dataSource.setUsername("root");
-        	dataSource.setPassword("biBip");
+        	DataSource dataSource=DataSourceProvider.getSingleDataSourceSingle();
         	
         	conn=dataSource.getConnection();
         	
@@ -39,7 +35,7 @@ public class Connexion {
             }
             rs.close();
             statement.close();
-            System.out.println("success");
+            System.out.println("Collaborateur affichés");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -52,6 +48,5 @@ public class Connexion {
                 e.printStackTrace();
             }
         }
-    }
+	}
 }
-
