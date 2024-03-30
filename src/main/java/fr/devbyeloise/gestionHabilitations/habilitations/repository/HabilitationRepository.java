@@ -17,9 +17,9 @@ public class HabilitationRepository {
 				}
 			
 			}
-			throw new HabilitationNotFoundException("Aucune habilitation trouvée avec l'ID " + id);
+			throw new NotFoundException("Aucune habilitation trouvée avec l'ID " + id);
 
-		} catch (HabilitationNotFoundException e) {
+		} catch (NotFoundException e) {
             e.printStackTrace();
             return null;
 		}

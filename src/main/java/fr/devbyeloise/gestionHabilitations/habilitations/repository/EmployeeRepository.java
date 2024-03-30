@@ -1,9 +1,12 @@
 package fr.devbyeloise.gestionHabilitations.habilitations.repository;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.sql.DataSource;
 
@@ -11,31 +14,28 @@ import fr.devbyeloise.gestionHabilitations.habilitations.DataSourceProvider;
 import fr.devbyeloise.gestionHabilitations.habilitations.modele.Employee;
 
 public class EmployeeRepository {
-	public void readAll (Employee employee){
+	public List<Employee> getAllEmployee(){
         Connection conn = null;
+        List<Employee> employees = new ArrayList<Employee>();
         try {
         	
         	DataSource dataSource=DataSourceProvider.getSingleDataSourceSingle();
         	
         	conn=dataSource.getConnection();
         	
-            //MySQL driver MySQL Connector
-//        	conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/habilitations?useSSL=false&useLegacyDatetimeCode=false&serverTimezone=Europe/Paris","root","biBip");
-        
+        	String sql = "SELECT ID, NAME, FIRSTNAME FROM EMPLOYEE";
             
             Statement statement = conn.createStatement();
-            ResultSet rs = statement.executeQuery("SELECT ID, NAME, FIRSTNAME FROM EMPLOYEE");
+            ResultSet rs = statement.executeQuery(sql);
             
-            while (rs.next()) {
-            	final String name = rs.getString("NAME");
-            	final String firstname = rs.getString("FIRSTNAME");
-            	final long id =rs.getLong("ID");
-            	System.out.println( name +" "+ firstname);
-            	
+            while (rs.next()) {         	
+            	Employee emp = new Employee();
+            	emp.setName(rs.getString("NAME"));
+            	emp.setFirstName(rs.getString("FIRSTNAME"));
+                employees.add(emp);    	
             }
             rs.close();
-            statement.close();
-            System.out.println("Collaborateur affichés");
+            statement.close();            
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -48,5 +48,83 @@ public class EmployeeRepository {
                 e.printStackTrace();
             }
         }
+		return employees;
 	}
+	
+	public void createEmployee (Employee employee) {
+		Connection conn = null;
+        try {
+        	
+        	DataSource dataSource=DataSourceProvider.getSingleDataSourceSingle();
+        	
+        	conn=dataSource.getConnection();
+        	
+            String sql = "INSERT INTO EMPLOYEE (NAME, firstname, company, direction, team) VALUES (?,?,?,?,?)";
+        	
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+      
+            preparedStatement.setString(1,employee.getName());
+            preparedStatement.setString(2,employee.getFirstName());
+            preparedStatement.setString(3,employee.getCompany());
+            preparedStatement.setString(4,employee.getDirection());
+            preparedStatement.setString(5,employee.getTeam());
+            
+            preparedStatement.executeUpdate();
+            
+
+            System.out.println("Collaborateur crée");
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                if (conn!=null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+       }
+        
+        @SuppressWarnings("null")
+		public Employee getEmployeeById(long id){
+            Connection conn = null;
+            Employee emp = null;
+            try {
+            	
+            	DataSource dataSource=DataSourceProvider.getSingleDataSourceSingle();
+            	
+            	conn=dataSource.getConnection();
+            	
+            	String sql = "SELECT ID, NAME, FIRSTNAME FROM EMPLOYEE WHERE ID = ?";
+                
+            	PreparedStatement preparedStatement = conn.prepareStatement(sql);
+                preparedStatement.setLong(1,id);
+                ResultSet rs = preparedStatement.executeQuery();
+                
+                
+                if(rs.next()) {   
+                	emp=new Employee();
+                	emp.setId(rs.getLong("ID"));
+                	emp.setName(rs.getString("NAME"));
+                	emp.setFirstName(rs.getString("FIRSTNAME"));   	
+                } 
+                rs.close();
+                preparedStatement.close();            
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            finally {
+                try {
+                    if (conn!=null) {
+                        conn.close();
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+    		return emp;
+    	}
 }

@@ -1,7 +1,14 @@
 package fr.devbyeloise.gestionHabilitations.habilitations;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import fr.devbyeloise.gestionHabilitations.habilitations.controller.EmployeeController;
+import fr.devbyeloise.gestionHabilitations.habilitations.controller.EmployeeInterface;
 import fr.devbyeloise.gestionHabilitations.habilitations.controller.HabilitationController;
+import fr.devbyeloise.gestionHabilitations.habilitations.modele.Employee;
 import fr.devbyeloise.gestionHabilitations.habilitations.modele.Habilitation;
+import fr.devbyeloise.gestionHabilitations.habilitations.repository.NotFoundException;
 
 /**
  * Hello world!
@@ -9,7 +16,7 @@ import fr.devbyeloise.gestionHabilitations.habilitations.modele.Habilitation;
  */
 public class App 
 {
-    public static void main( String[] args )
+    public static void main( String[] args ) throws NotFoundException
     {
     	Habilitation chariot = new Habilitation();
         chariot.setId(1);
@@ -19,25 +26,31 @@ public class App
         
         HabilitationController habilitationController = new HabilitationController();
         habilitationController.createHabilitation(chariot);
-        
-        // System.out.println("Une habilitation " + chariot.getName() + " a été crée");
-        
+                
     	Habilitation sauveteurSecouriste = new Habilitation();
     	sauveteurSecouriste.setId(2);
     	sauveteurSecouriste.setName("Sauveteur");
     	sauveteurSecouriste.setFrequency(24);
     	sauveteurSecouriste.setSubdomain("Santé");
-        
-    	//System.out.println(sauveteurSecouriste);
     	
         habilitationController.createHabilitation(sauveteurSecouriste);
         
         sauveteurSecouriste.setId(50);
         sauveteurSecouriste.setName("Salutttt!!!");
-        System.out.println("1" + sauveteurSecouriste);
-//        
- System.out.println("2"+ habilitationController.updateHabilitation(sauveteurSecouriste));
-//        
-//        System.out.println(habilitationController.getHabilitation(50));
+         		
+ 		EmployeeInterface empController = new EmployeeController();
+ 		
+ 		List<Employee> listEmp = empController.getAllEmployee();
+ 		for (Employee employee : listEmp) {
+			System.out.println(employee.getName() + " " + employee.getFirstName());
+		}
+ 		
+		Integer idSelected=2;
+		try {
+	        Employee searchEmployee = empController.getEmployeeById(idSelected);
+	        System.out.println("L'ID " + idSelected + " correspond à " + searchEmployee.getFirstName() + " " + searchEmployee.getName());
+	    } catch (NotFoundException e) {
+	        System.out.println(e.getMessage());
+	    }
     }
 }

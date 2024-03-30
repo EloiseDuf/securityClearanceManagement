@@ -1,5 +1,7 @@
 package fr.devbyeloise.gestionHabilitations.habilitations.controller;
 
+import java.util.List;
+
 import fr.devbyeloise.gestionHabilitations.habilitations.modele.Habilitation;
 import fr.devbyeloise.gestionHabilitations.habilitations.repository.HabilitationRepository;
 
@@ -10,13 +12,11 @@ public class HabilitationController implements HabilitationInterface {
 	@Override
 	public void createHabilitation(Habilitation habilitation) {
 		
-		habilitationRepository.listHabilitation.add(habilitation);
-		System.out.println(habilitationRepository.listHabilitation.size());
-		
+		habilitationRepository.listHabilitation.add(habilitation);		
 	}
 
 	@Override
-	public Habilitation getHabilitation(long id) {
+	public Habilitation getHabilitationById(long id) {
 		
 		return habilitationRepository.getHabilitationById(id);
 	}
@@ -27,13 +27,18 @@ public class HabilitationController implements HabilitationInterface {
 			return "Erreur";
 		}
 		return habilitationRepository.update(habilitation);
-		//return "L'habilitation " + habilitation.getName() + " a bien été mis à jour.";
 	}
 
 	@Override
-	public void deleteHabilitation(Long id) {
+	public void deleteHabilitation(long id) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public List<Habilitation> getAllHabilitation() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 
