@@ -127,4 +127,65 @@ public class EmployeeRepository {
             }
     		return emp;
     	}
+        
+		public void updateEmployee(Employee employee){
+            Connection conn = null;
+            try {
+            	
+            	DataSource dataSource=DataSourceProvider.getSingleDataSourceSingle();
+            	
+            	conn=dataSource.getConnection();
+            	
+            	String sql = "UPDATE EMPLOYEE SET NAME=?, FIRSTNAME=? WHERE ID = ?";
+                
+            	PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            	preparedStatement.setString(1,employee.getName());
+            	preparedStatement.setString(2,employee.getFirstName());
+            	preparedStatement.setLong(3,employee.getId());
+               
+                int numberEmployeeSave = preparedStatement.executeUpdate();
+
+                preparedStatement.close();            
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            finally {
+                try {
+                    if (conn!=null) {
+                        conn.close();
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+    	}
+		
+		public void deleteEmployee(long id){
+            Connection conn = null;
+            try {
+            	
+            	DataSource dataSource=DataSourceProvider.getSingleDataSourceSingle();
+            	
+            	conn=dataSource.getConnection();
+            	
+            	String sql = "DELETE FROM EMPLOYEE WHERE ID = ?";
+                
+            	PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            	preparedStatement.setLong(1,id);
+               
+                preparedStatement.executeUpdate();
+           
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            finally {
+                try {
+                    if (conn!=null) {
+                        conn.close();
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+    	}
 }

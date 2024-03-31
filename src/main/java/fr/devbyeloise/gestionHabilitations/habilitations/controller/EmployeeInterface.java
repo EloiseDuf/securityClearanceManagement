@@ -9,7 +9,7 @@ public interface EmployeeInterface {
 	void createEmployee (Employee employee);
 	Employee getEmployeeById(long id) throws NotFoundException;
 	List<Employee> getAllEmployee();
-	String updateEmployee (Employee employee);
+	void updateEmployee (Employee employee) throws NotFoundException;
 	void deleteEmployee (long id);
 
 }

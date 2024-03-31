@@ -45,12 +45,21 @@ public class App
 			System.out.println(employee.getName() + " " + employee.getFirstName());
 		}
  		
-		Integer idSelected=2;
-		try {
-	        Employee searchEmployee = empController.getEmployeeById(idSelected);
-	        System.out.println("L'ID " + idSelected + " correspond à " + searchEmployee.getFirstName() + " " + searchEmployee.getName());
-	    } catch (NotFoundException e) {
-	        System.out.println(e.getMessage());
-	    }
+// 		............................................................
+ 		
+	        Employee searchEmployee = empController.getEmployeeById(2);
+	        System.out.println("L'ID correspond à " + searchEmployee.getFirstName() + " " + searchEmployee.getName());
+//		.....................................................
+	        
+//	        Employee newEmployee = new Employee();
+//	        newEmployee.setName("DUPONT");
+//	        newEmployee.setFirstName("Jules");
+//	        empController.createEmployee(newEmployee);
+	        
+//	        searchEmployee.setFirstName("Georgette");
+//	        empController.updateEmployee(searchEmployee);
+	        
+	        empController.deleteEmployee(8);
+		
     }
 }

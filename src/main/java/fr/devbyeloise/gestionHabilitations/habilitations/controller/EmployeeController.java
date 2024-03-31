@@ -38,14 +38,14 @@ public class EmployeeController implements EmployeeInterface {
 	}
 
 	@Override
-	public String updateEmployee(Employee employee) {
-		// TODO Auto-generated method stub
-		return null;
+	public void updateEmployee(Employee employee)throws NotFoundException {
+		employeeRepository.updateEmployee(employee);
+		
 	}
 
 	@Override
 	public void deleteEmployee(long id) {
-		// TODO Auto-generated method stub
+		employeeRepository.deleteEmployee(id);
 
 	}
 
