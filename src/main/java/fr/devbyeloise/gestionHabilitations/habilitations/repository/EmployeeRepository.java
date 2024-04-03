@@ -14,12 +14,15 @@ import fr.devbyeloise.gestionHabilitations.habilitations.DataSourceProvider;
 import fr.devbyeloise.gestionHabilitations.habilitations.modele.Employee;
 
 public class EmployeeRepository {
+	
+	private DataSource dataSource=DataSourceProvider.getSingleDataSourceSingle();
+	private Connection conn;
+	
+	
 	public List<Employee> getAllEmployee(){
-        Connection conn = null;
+        
         List<Employee> employees = new ArrayList<Employee>();
         try {
-        	
-        	DataSource dataSource=DataSourceProvider.getSingleDataSourceSingle();
         	
         	conn=dataSource.getConnection();
         	
@@ -52,10 +55,7 @@ public class EmployeeRepository {
 	}
 	
 	public void createEmployee (Employee employee) {
-		Connection conn = null;
         try {
-        	
-        	DataSource dataSource=DataSourceProvider.getSingleDataSourceSingle();
         	
         	conn=dataSource.getConnection();
         	
@@ -88,15 +88,10 @@ public class EmployeeRepository {
         }
        }
         
-        @SuppressWarnings("null")
 		public Employee getEmployeeById(long id){
-            Connection conn = null;
-            Employee emp = null;
+            Employee emp = new Employee();
             try {
-            	
-            	DataSource dataSource=DataSourceProvider.getSingleDataSourceSingle();
-            	
-            	conn=dataSource.getConnection();
+               	conn=dataSource.getConnection();
             	
             	String sql = "SELECT ID, NAME, FIRSTNAME FROM EMPLOYEE WHERE ID = ?";
                 
@@ -104,9 +99,8 @@ public class EmployeeRepository {
                 preparedStatement.setLong(1,id);
                 ResultSet rs = preparedStatement.executeQuery();
                 
-                
                 if(rs.next()) {   
-                	emp=new Employee();
+                	
                 	emp.setId(rs.getLong("ID"));
                 	emp.setName(rs.getString("NAME"));
                 	emp.setFirstName(rs.getString("FIRSTNAME"));   	
@@ -129,11 +123,9 @@ public class EmployeeRepository {
     	}
         
 		public void updateEmployee(Employee employee){
-            Connection conn = null;
+            
             try {
-            	
-            	DataSource dataSource=DataSourceProvider.getSingleDataSourceSingle();
-            	
+            	            	
             	conn=dataSource.getConnection();
             	
             	String sql = "UPDATE EMPLOYEE SET NAME=?, FIRSTNAME=? WHERE ID = ?";
@@ -143,7 +135,7 @@ public class EmployeeRepository {
             	preparedStatement.setString(2,employee.getFirstName());
             	preparedStatement.setLong(3,employee.getId());
                
-                int numberEmployeeSave = preparedStatement.executeUpdate();
+                preparedStatement.executeUpdate();
 
                 preparedStatement.close();            
             } catch (SQLException e) {
@@ -161,11 +153,9 @@ public class EmployeeRepository {
     	}
 		
 		public void deleteEmployee(long id){
-            Connection conn = null;
+            
             try {
-            	
-            	DataSource dataSource=DataSourceProvider.getSingleDataSourceSingle();
-            	
+        
             	conn=dataSource.getConnection();
             	
             	String sql = "DELETE FROM EMPLOYEE WHERE ID = ?";

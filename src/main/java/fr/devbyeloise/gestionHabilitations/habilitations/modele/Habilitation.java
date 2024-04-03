@@ -4,7 +4,7 @@ public class Habilitation {
 	private long id;
 	private String name;
 	private int frequency;
-	private String subdomain;
+	private int subdomain;
 	
 	public long getId() {
 		return id;
@@ -24,10 +24,10 @@ public class Habilitation {
 	public void setFrequency(int frequency) {
 		this.frequency = frequency;
 	}
-	public String getSubdomain() {
+	public int getSubdomain() {
 		return subdomain;
 	}
-	public void setSubdomain(String subdomain) {
+	public void setSubdomain(int subdomain) {
 		this.subdomain = subdomain;
 	}
 //	@Override

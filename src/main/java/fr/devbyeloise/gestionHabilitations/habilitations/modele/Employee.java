@@ -1,5 +1,7 @@
 package fr.devbyeloise.gestionHabilitations.habilitations.modele;
 
+import java.util.List;
+
 public class Employee {
 	private long id;
 	private String name;
@@ -7,6 +9,8 @@ public class Employee {
 	private String company;
 	private String direction;
 	private String team;
+	private List<Habilitation> habilitations;
+	
 	public long getId() {
 		return id;
 	}
@@ -42,6 +46,12 @@ public class Employee {
 	}
 	public void setTeam(String team) {
 		this.team = team;
+	}
+	public List<Habilitation> getHabilitations() {
+		return habilitations;
+	}
+	public void setHabilitations(List<Habilitation> habilitations) {
+		this.habilitations = habilitations;
 	}
 	
 	

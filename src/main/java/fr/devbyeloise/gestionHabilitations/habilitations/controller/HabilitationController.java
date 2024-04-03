@@ -4,6 +4,7 @@ import java.util.List;
 
 import fr.devbyeloise.gestionHabilitations.habilitations.modele.Habilitation;
 import fr.devbyeloise.gestionHabilitations.habilitations.repository.HabilitationRepository;
+import fr.devbyeloise.gestionHabilitations.habilitations.repository.NotFoundException;
 
 public class HabilitationController implements HabilitationInterface {
 	
@@ -12,33 +13,40 @@ public class HabilitationController implements HabilitationInterface {
 	@Override
 	public void createHabilitation(Habilitation habilitation) {
 		
-		habilitationRepository.listHabilitation.add(habilitation);		
-	}
-
-	@Override
-	public Habilitation getHabilitationById(long id) {
-		
-		return habilitationRepository.getHabilitationById(id);
-	}
-
-	@Override
-	public String updateHabilitation(Habilitation habilitation) {
-		if(habilitation.getId() < 0) {
-			return "Erreur";
+		if(habilitation.getName().isEmpty()) {
+			System.out.println("Le nom ne peut pas être vide");
 		}
-		return habilitationRepository.update(habilitation);
+		
+		habilitationRepository.createHabilitation(habilitation);		
+	}
+
+	@Override
+	public Habilitation getHabilitationById(long id) throws NotFoundException {
+		
+		Habilitation habilitation = habilitationRepository.getHabilitationById(id);
+	    
+	    if (habilitation != null) {
+	        return habilitation;
+	    } else {
+	        throw new NotFoundException("Aucun employé trouvée avec l'ID " + id);
+	    }
+	}
+
+	@Override
+	public void updateHabilitation(Habilitation habilitation) {
+		habilitationRepository.updateHabilitation(habilitation);
 	}
 
 	@Override
 	public void deleteHabilitation(long id) {
-		// TODO Auto-generated method stub
+		habilitationRepository.deleteHabilitation(id);
+
 		
 	}
 
 	@Override
 	public List<Habilitation> getAllHabilitation() {
-		// TODO Auto-generated method stub
-		return null;
+		return habilitationRepository.getAllHabilitations();
 	}
 	
 
