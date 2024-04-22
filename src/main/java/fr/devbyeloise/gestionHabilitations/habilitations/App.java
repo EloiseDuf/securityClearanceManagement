@@ -6,6 +6,7 @@ import fr.devbyeloise.gestionHabilitations.habilitations.controller.EmployeeCont
 import fr.devbyeloise.gestionHabilitations.habilitations.controller.EmployeeInterface;
 import fr.devbyeloise.gestionHabilitations.habilitations.controller.HabilitationController;
 import fr.devbyeloise.gestionHabilitations.habilitations.controller.HabilitationInterface;
+import fr.devbyeloise.gestionHabilitations.habilitations.controller.ValidationDataException;
 import fr.devbyeloise.gestionHabilitations.habilitations.modele.Employee;
 import fr.devbyeloise.gestionHabilitations.habilitations.modele.Habilitation;
 import fr.devbyeloise.gestionHabilitations.habilitations.repository.NotFoundException;
@@ -16,7 +17,7 @@ import fr.devbyeloise.gestionHabilitations.habilitations.repository.NotFoundExce
  */
 public class App 
 {
-    public static void main( String[] args ) throws NotFoundException
+    public static void main( String[] args ) throws NotFoundException, ValidationDataException
     {
     	
     	
@@ -27,10 +28,10 @@ public class App
 			System.out.println(habilitation.getName());
 		}
  			
- 		Habilitation searchHabilitation = habilitationController.getHabilitationById(2);
- 		searchHabilitation.setName("Bip");
-
- 		habilitationController.updateHabilitation(searchHabilitation);
+// 		Habilitation searchHabilitation = habilitationController.getHabilitationById(2);
+// 		searchHabilitation.setName("Bip");
+//
+// 		habilitationController.updateHabilitation(searchHabilitation);
  		
  		
  		EmployeeInterface empController = new EmployeeController();
@@ -54,7 +55,16 @@ public class App
 //	        searchEmployee.setFirstName("Georgette");
 //	        empController.updateEmployee(searchEmployee);
 	        
-	        empController.deleteEmployee(8);
+//	        empController.deleteEmployee(8);
+	        
+//	        HabilitationInterface habControler = new HabilitationController();
+	        
+//	        Habilitation incendie = new Habilitation();
+//	        incendie.setName("Incendie");
+//	        habControler.createHabilitation(incendie);
+	        
+	        empController.deleteEmployee(9);
 		
-    }
+    
+}
 }

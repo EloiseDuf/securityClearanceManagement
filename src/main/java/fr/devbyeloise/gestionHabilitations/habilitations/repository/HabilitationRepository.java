@@ -11,7 +11,6 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import fr.devbyeloise.gestionHabilitations.habilitations.DataSourceProvider;
-import fr.devbyeloise.gestionHabilitations.habilitations.modele.Employee;
 import fr.devbyeloise.gestionHabilitations.habilitations.modele.Habilitation;
 
 public class HabilitationRepository {
