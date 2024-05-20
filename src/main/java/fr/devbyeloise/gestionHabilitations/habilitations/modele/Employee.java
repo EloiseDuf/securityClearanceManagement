@@ -11,6 +11,34 @@ public class Employee {
 	private String team;
 	private List<Habilitation> habilitations;
 	
+	
+	public Employee(long id) {
+		this.id = id;
+	}
+
+	public Employee(String name, String firstName) {
+		this.name = name;
+		this.firstName = firstName;
+	}
+
+	public Employee(long id, String name, String firstName) {
+		this.id = id;
+		this.name = name;
+		this.firstName = firstName;
+	}
+	
+	
+	public Employee(long id, String name, String firstName, String company, String direction, String team,
+			List<Habilitation> habilitations) {
+		this.id = id;
+		this.name = name;
+		this.firstName = firstName;
+		this.company = company;
+		this.direction = direction;
+		this.team = team;
+		this.habilitations = habilitations;
+	}
+
 	public long getId() {
 		return id;
 	}

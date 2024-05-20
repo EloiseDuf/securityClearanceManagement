@@ -17,42 +17,56 @@ public class EmployeeController implements EmployeeInterface {
 	}
 
 	@Override
-	public void createEmployee(Employee employee) throws ValidationDataException {
+	public void createUpdateEmployee(Employee employee) throws ValidationDataException {
 		
-	List<String> errors = new ArrayList<>();
-		
-	try {
-		if(employee.getName()==null||employee.getName().isEmpty()) {
-			errors.add("Le nom ne peut pas être vide");
+		List<String> errors = new ArrayList<>();
+			
+		try {
+			if(employee.getName()==null||employee.getName().isEmpty()) {
+				errors.add("Le nom ne peut pas être vide");
+			}
+			
+			if(employee.getFirstName()==null||employee.getFirstName().isEmpty()) {
+				errors.add("Le prénom ne peut pas être vide");
+			}
+			
+			if(employee.getId()<0) {
+				errors.add("L'id ne peut pas être négatif");
+			}
+			
+			if(!errors.isEmpty()) {
+				throw new ValidationDataException(null, errors);
+			}
+			
+			if(employee.getId()==0) {
+				employeeRepository.createEmployee(employee);
+			}else {
+				employeeRepository.updateEmployee(employee);
+			}
+
+			
+		}catch (ValidationDataException e){
+			List<String> errorMessages = e.getErrorMessages();
+			System.out.println("Erreur de création d'employé : ");
+			for (String errorMessage : errorMessages) {
+	            System.out.println(errorMessage);
+	        }
+			
 		}
-		
-		if(employee.getFirstName()==null||employee.getFirstName().isEmpty()) {
-			errors.add("Le prénom ne peut pas être vide");
-		}
-		
-		if(!errors.isEmpty()) {
-			throw new ValidationDataException(null, errors);
-		}
-		
-		employeeRepository.createEmployee(employee);
-		
-	}catch (ValidationDataException e){
-		List<String> errorMessages = e.getErrorMessages();
-		System.out.println("Erreur de création d'employé : ");
-		for (String errorMessage : errorMessages) {
-            System.out.println(errorMessage);
-        }
-		
-	}
 			
 
 	}
 
 	@Override
 	public Employee getEmployeeById(long id) throws NotFoundException {
-		Employee employee = employeeRepository.getEmployeeById(id);
-	    
-	    if (employee != null) {
+		String name = "";
+		String firstName = "";
+		Employee employee = new Employee(id, name, firstName);
+		if(id>0) {
+			employee = employeeRepository.getEmployeeById(id);			
+		}
+
+	    if (employee.getName() != null && employee.getFirstName() != null ) {
 	        return employee;
 	    } else {
 	        throw new NotFoundException("Aucun employé trouvée avec l'ID " + id);
@@ -60,13 +74,12 @@ public class EmployeeController implements EmployeeInterface {
 	}
 
 	@Override
-	public void updateEmployee(Employee employee)throws NotFoundException {
-		employeeRepository.updateEmployee(employee);
-		
-	}
-
-	@Override
-	public void deleteEmployee(long id) {
+	public void deleteEmployee(long id) throws ValidationDataException {
+		if (id>0) {
+	        employeeRepository.deleteEmployee(id);
+	    } else {
+	        throw new ValidationDataException("L'id ne peut pas être négatif ou égal à 0", null);
+	    }
 		employeeRepository.deleteEmployee(id);
 
 	}

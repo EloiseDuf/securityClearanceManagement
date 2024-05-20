@@ -41,16 +41,20 @@ public class App
 			System.out.println(employee.getName() + " " + employee.getFirstName());
 		}
  		
-// 		............................................................
  		
-	        Employee searchEmployee = empController.getEmployeeById(2);
-	        System.out.println("L'ID correspond à " + searchEmployee.getFirstName() + " " + searchEmployee.getName());
+ 		
+// 		............................................................
+ 			
+ 		
+//	        Employee searchEmployee = empController.getEmployeeById(2);
+//	        empController.createUpdateEmployee(searchEmployee);
+
 //		.....................................................
 	        
 //	        Employee newEmployee = new Employee();
 //	        newEmployee.setName("DUPONT");
 //	        newEmployee.setFirstName("Jules");
-//	        empController.createEmployee(newEmployee);
+//	        empController.createUpdateEmployee(newEmployee);
 	        
 //	        searchEmployee.setFirstName("Georgette");
 //	        empController.updateEmployee(searchEmployee);
@@ -63,7 +67,7 @@ public class App
 //	        incendie.setName("Incendie");
 //	        habControler.createHabilitation(incendie);
 	        
-	        empController.deleteEmployee(9);
+//	        empController.deleteEmployee(9);
 		
     
 }

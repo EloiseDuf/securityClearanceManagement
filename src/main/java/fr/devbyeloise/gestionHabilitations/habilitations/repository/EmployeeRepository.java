@@ -31,8 +31,11 @@ public class EmployeeRepository {
             Statement statement = conn.createStatement();
             ResultSet rs = statement.executeQuery(sql);
             
+            String name="";
+            String firstname="";
+            
             while (rs.next()) {         	
-            	Employee emp = new Employee();
+            	Employee emp = new Employee(name, firstname);
             	emp.setName(rs.getString("NAME"));
             	emp.setFirstName(rs.getString("FIRSTNAME"));
                 employees.add(emp);    	
@@ -89,7 +92,9 @@ public class EmployeeRepository {
        }
         
 		public Employee getEmployeeById(long id){
-            Employee emp = new Employee();
+			String name = "";
+			String firstName = "";
+            Employee emp = new Employee(id, name, firstName);
             try {
                	conn=dataSource.getConnection();
             	

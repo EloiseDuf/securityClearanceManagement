@@ -12,7 +12,7 @@ public class HabilitationController implements HabilitationInterface {
 	HabilitationRepository habilitationRepository = new HabilitationRepository();
 
 	@Override
-	public void createHabilitation(Habilitation habilitation) {
+	public void createUpdateHabilitation(Habilitation habilitation) {
 		
 		List<String> errors = new ArrayList<>();
 		
@@ -29,11 +29,19 @@ public class HabilitationController implements HabilitationInterface {
 				errors.add("Le sous domaine est obligatoire");
 			}
 			
+			if(habilitation.getId()<0) {
+				errors.add("L'id ne peut pas être négatif");
+			}
+			
 			if(!errors.isEmpty()) {
 				throw new ValidationDataException(null, errors);
 			}
 			
+			if(habilitation.getId()==0) {
 			habilitationRepository.createHabilitation(habilitation);
+			} else {
+			habilitationRepository.updateHabilitation(habilitation);
+			}
 			
 		}catch (ValidationDataException e){
 			List<String> errorMessages = e.getErrorMessages();
@@ -55,11 +63,6 @@ public class HabilitationController implements HabilitationInterface {
 	    } else {
 	        throw new NotFoundException("Aucun employé trouvée avec l'ID " + id);
 	    }
-	}
-
-	@Override
-	public void updateHabilitation(Habilitation habilitation) {
-		habilitationRepository.updateHabilitation(habilitation);
 	}
 
 	@Override
