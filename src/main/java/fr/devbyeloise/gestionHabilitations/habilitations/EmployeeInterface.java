@@ -1,7 +1,8 @@
-package fr.devbyeloise.gestionHabilitations.habilitations.controller;
+package fr.devbyeloise.gestionHabilitations.habilitations;
 
 import java.util.List;
 
+import fr.devbyeloise.gestionHabilitations.habilitations.controller.ValidationDataException;
 import fr.devbyeloise.gestionHabilitations.habilitations.modele.Employee;
 import fr.devbyeloise.gestionHabilitations.habilitations.repository.NotFoundException;
 

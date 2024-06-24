@@ -9,7 +9,7 @@ public class Employee {
 	private String company;
 	private String direction;
 	private String team;
-	private List<Habilitation> habilitations;
+	private List<HabilitationEmployee> habilitationsEmployee;
 	
 	
 	public Employee(long id) {
@@ -27,16 +27,30 @@ public class Employee {
 		this.firstName = firstName;
 	}
 	
-	
-	public Employee(long id, String name, String firstName, String company, String direction, String team,
-			List<Habilitation> habilitations) {
+	public Employee(long id, String name, String firstName, String company, String direction, String team) {
 		this.id = id;
 		this.name = name;
 		this.firstName = firstName;
 		this.company = company;
 		this.direction = direction;
 		this.team = team;
-		this.habilitations = habilitations;
+	}
+	
+	public Employee(long id, String name, String firstName, String company, String direction, String team,
+			List<HabilitationEmployee> habilitationsEmployee) {
+		this.id = id;
+		this.name = name;
+		this.firstName = firstName;
+		this.company = company;
+		this.direction = direction;
+		this.team = team;
+		this.habilitationsEmployee = habilitationsEmployee;
+	}
+
+	public Employee(Long id, String name, String firstName) {
+		this.id=id;
+		this.name=name;
+		this.firstName=firstName;
 	}
 
 	public long getId() {
@@ -75,11 +89,11 @@ public class Employee {
 	public void setTeam(String team) {
 		this.team = team;
 	}
-	public List<Habilitation> getHabilitations() {
-		return habilitations;
+	public List<HabilitationEmployee> getHabilitations() {
+		return habilitationsEmployee;
 	}
-	public void setHabilitations(List<Habilitation> habilitations) {
-		this.habilitations = habilitations;
+	public void setHabilitations(List<HabilitationEmployee> habilitationsEmployee) {
+		this.habilitationsEmployee = habilitationsEmployee;
 	}
 	
 	

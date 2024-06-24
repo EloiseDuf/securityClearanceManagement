@@ -3,6 +3,7 @@ package fr.devbyeloise.gestionHabilitations.habilitations.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.devbyeloise.gestionHabilitations.habilitations.EmployeeInterface;
 import fr.devbyeloise.gestionHabilitations.habilitations.modele.Employee;
 
 import fr.devbyeloise.gestionHabilitations.habilitations.repository.EmployeeRepository;

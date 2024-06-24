@@ -36,6 +36,7 @@ public class EmployeeRepository {
             
             while (rs.next()) {         	
             	Employee emp = new Employee(name, firstname);
+            	emp.setId(rs.getLong("ID"));
             	emp.setName(rs.getString("NAME"));
             	emp.setFirstName(rs.getString("FIRSTNAME"));
                 employees.add(emp);    	

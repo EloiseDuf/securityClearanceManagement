@@ -12,6 +12,7 @@ import javax.sql.DataSource;
 
 import fr.devbyeloise.gestionHabilitations.habilitations.DataSourceProvider;
 import fr.devbyeloise.gestionHabilitations.habilitations.modele.Habilitation;
+import fr.devbyeloise.gestionHabilitations.habilitations.modele.Theme;
 
 public class HabilitationRepository {
 	
@@ -24,15 +25,24 @@ public class HabilitationRepository {
         	
         	conn=dataSource.getConnection();
         	
-        	String sql = "SELECT ID, NAME, DURATION, THEMES_ID FROM HABILITATIONS";
-            
+        	String sql = "SELECT h.id, h.name, duration, t.id, t.name FROM HABILITATIONS h "
+        			+ "join themes t on t.id = h.themes_id";
+        	
+    
             Statement statement = conn.createStatement();
             ResultSet rs = statement.executeQuery(sql);
             
-            while (rs.next()) {         	
-            	Habilitation habilitation = new Habilitation();
-            	habilitation.setName(rs.getString("NAME"));
-            	habilitation.setFrequency(rs.getInt("DURATION"));
+            while (rs.next()) {
+            	Long habilitationId = rs.getLong("h.id");
+            	String habilitationName=rs.getString("h.name");
+            	int frequency = rs.getInt("duration");
+            	
+            	int themeId = rs.getInt("t.id");
+            	String themeName = rs.getString("t.name");
+            	
+            	Theme theme = new Theme(themeId,themeName);
+            	
+            	Habilitation habilitation = new Habilitation(habilitationId, habilitationName, frequency, theme);
             	habilitations.add(habilitation);    	
             }
             rs.close();
@@ -62,19 +72,25 @@ public class HabilitationRepository {
         	
         	conn=dataSource.getConnection();
         	
-        	String sql = "SELECT ID, NAME, DURATION, THEMES_ID FROM HABILITATIONS WHERE ID = ?";
+        	String sql = "SELECT h.id, h.name, duration, t.id, t.name FROM HABILITATIONS h "
+        			+ "JOIN themes t on t.id = h.themes_id "
+        			+ "WHERE h.id = ?";
             
         	PreparedStatement preparedStatement = conn.prepareStatement(sql);
             preparedStatement.setLong(1,id);
             ResultSet rs = preparedStatement.executeQuery();
             
             
-            if(rs.next()) {   
-            	habilitation=new Habilitation();
-            	habilitation.setId(rs.getLong("ID"));
-            	habilitation.setName(rs.getString("NAME"));
-            	habilitation.setFrequency(rs.getInt("DURATION"));
-            	habilitation.setSubdomain(rs.getInt("THEMES_ID"));
+            if(rs.next()) {  
+            	long habilitationId=rs.getLong("ID");
+            	String habilitationName=rs.getString("NAME");
+            	int frequency = rs.getInt("DURATION");
+            	int themeId = rs.getInt("t.id");
+            	String themeName = rs.getString("t.name");
+            	
+            	Theme theme =new Theme(themeId, themeName);
+            	
+            	habilitation =new Habilitation(habilitationId, habilitationName, frequency, theme);
             } 
             rs.close();
             preparedStatement.close();            
@@ -93,7 +109,7 @@ public class HabilitationRepository {
 		return habilitation;
 	}
 	
-	public void updateHabilitation(Habilitation habilitation) {
+	public void updateHabilitation(Habilitation habilitation, Theme theme) {
 		Connection conn = null;
         try {
         	
@@ -106,7 +122,7 @@ public class HabilitationRepository {
         	PreparedStatement preparedStatement = conn.prepareStatement(sql);
         	preparedStatement.setString(1,habilitation.getName());
         	preparedStatement.setInt(2,habilitation.getFrequency());
-        	preparedStatement.setInt(3,habilitation.getSubdomain());
+        	preparedStatement.setInt(3,theme.getId());
         	preparedStatement.setLong(4,habilitation.getId());
            
             preparedStatement.executeUpdate();
@@ -126,7 +142,7 @@ public class HabilitationRepository {
         }
 	}
 
-	public void createHabilitation (Habilitation habilitation) {
+	public void createHabilitation (Habilitation habilitation, Theme theme) {
 		Connection conn = null;
         try {
         	
@@ -140,7 +156,7 @@ public class HabilitationRepository {
       
             preparedStatement.setString(1,habilitation.getName());
             preparedStatement.setInt(2,habilitation.getFrequency());
-            preparedStatement.setInt(3,habilitation.getSubdomain());
+            preparedStatement.setInt(3,theme.getId());
 
             
             preparedStatement.executeUpdate();

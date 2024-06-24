@@ -3,7 +3,9 @@ package fr.devbyeloise.gestionHabilitations.habilitations.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.devbyeloise.gestionHabilitations.habilitations.HabilitationInterface;
 import fr.devbyeloise.gestionHabilitations.habilitations.modele.Habilitation;
+import fr.devbyeloise.gestionHabilitations.habilitations.modele.Theme;
 import fr.devbyeloise.gestionHabilitations.habilitations.repository.HabilitationRepository;
 import fr.devbyeloise.gestionHabilitations.habilitations.repository.NotFoundException;
 
@@ -12,7 +14,7 @@ public class HabilitationController implements HabilitationInterface {
 	HabilitationRepository habilitationRepository = new HabilitationRepository();
 
 	@Override
-	public void createUpdateHabilitation(Habilitation habilitation) {
+	public void createUpdateHabilitation(Habilitation habilitation, Theme theme) {
 		
 		List<String> errors = new ArrayList<>();
 		
@@ -25,7 +27,7 @@ public class HabilitationController implements HabilitationInterface {
 				errors.add("La fréquence ne peut pas être vide ou égale à 0");
 			}
 			
-			if(habilitation.getSubdomain()==0) {
+			if(habilitation.getTheme().getId()==0) {
 				errors.add("Le sous domaine est obligatoire");
 			}
 			
@@ -38,9 +40,9 @@ public class HabilitationController implements HabilitationInterface {
 			}
 			
 			if(habilitation.getId()==0) {
-			habilitationRepository.createHabilitation(habilitation);
+			habilitationRepository.createHabilitation(habilitation,theme);
 			} else {
-			habilitationRepository.updateHabilitation(habilitation);
+			habilitationRepository.updateHabilitation(habilitation, theme);
 			}
 			
 		}catch (ValidationDataException e){

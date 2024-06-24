@@ -2,13 +2,11 @@ package fr.devbyeloise.gestionHabilitations.habilitations;
 
 import java.util.List;
 
-import fr.devbyeloise.gestionHabilitations.habilitations.controller.EmployeeController;
-import fr.devbyeloise.gestionHabilitations.habilitations.controller.EmployeeInterface;
 import fr.devbyeloise.gestionHabilitations.habilitations.controller.HabilitationController;
-import fr.devbyeloise.gestionHabilitations.habilitations.controller.HabilitationInterface;
+import fr.devbyeloise.gestionHabilitations.habilitations.controller.HabilitationEmployeeController;
 import fr.devbyeloise.gestionHabilitations.habilitations.controller.ValidationDataException;
-import fr.devbyeloise.gestionHabilitations.habilitations.modele.Employee;
 import fr.devbyeloise.gestionHabilitations.habilitations.modele.Habilitation;
+import fr.devbyeloise.gestionHabilitations.habilitations.modele.HabilitationEmployee;
 import fr.devbyeloise.gestionHabilitations.habilitations.repository.NotFoundException;
 
 /**
@@ -26,6 +24,30 @@ public class App
  		List<Habilitation> listHabilitations = habilitationController.getAllHabilitation();
  		for (Habilitation habilitation : listHabilitations) {
 			System.out.println(habilitation.getName());
+			System.out.println(habilitation.getTheme().getName());
+		}
+ 		
+ 		HabilitationEmployeeInterface habilitationEmployeeController = new HabilitationEmployeeController();
+ 	
+ 		HabilitationEmployee habilitationEmployee = habilitationEmployeeController.getHabilitationEmployeeByIdEmployeeAndIdHabilitation(10l, 1l);
+ 		System.out.println(habilitationEmployee.getHabilitation().getName());
+ 		
+ 		List<HabilitationEmployee> listHabilitationsEmployee = habilitationEmployeeController.getHabilitationEmployeeByIdEmployeeWithLessInformations(10l);
+ 		System.out.println("Le salarié détient : ");
+ 		for (HabilitationEmployee habilitationOneEmployee : listHabilitationsEmployee) {
+			System.out.println(habilitationOneEmployee.getHabilitation().getName()+" qui a été obtenu le "+ habilitationOneEmployee.getTrainingDate());
+		}
+ 		
+ 		List<HabilitationEmployee> listHabilitationsAllEmployees = habilitationEmployeeController.getAllHabilitationEmployee();
+ 		System.out.println("Voici la liste des habilitations de tous les salariés : ");
+ 		for (HabilitationEmployee habilitationOneEmployee : listHabilitationsAllEmployees) {
+			System.out.println(habilitationOneEmployee.getEmployee().getFirstName() +" "+ habilitationOneEmployee.getEmployee().getName()+" " +habilitationOneEmployee.getHabilitation().getName()+" "+ habilitationOneEmployee.getTrainingDate());
+		}
+ 		
+ 		List<HabilitationEmployee> listAllHabilitationsForOneEmployee = habilitationEmployeeController.getHabilitationEmployeeByIdEmployeeWithLessInformations(11l);
+ 		System.out.println("Voici la liste des habilitations pour le collaborateur : ");
+ 		for (HabilitationEmployee habilitationOneEmployee : listAllHabilitationsForOneEmployee) {
+			System.out.println(habilitationOneEmployee.getEmployee().getFirstName() +" "+ habilitationOneEmployee.getEmployee().getName()+" " +habilitationOneEmployee.getHabilitation().getName()+" "+ habilitationOneEmployee.getTrainingDate());
 		}
  			
 // 		Habilitation searchHabilitation = habilitationController.getHabilitationById(2);
@@ -34,12 +56,12 @@ public class App
 // 		habilitationController.updateHabilitation(searchHabilitation);
  		
  		
- 		EmployeeInterface empController = new EmployeeController();
- 		
- 		List<Employee> listEmp = empController.getAllEmployee();
- 		for (Employee employee : listEmp) {
-			System.out.println(employee.getName() + " " + employee.getFirstName());
-		}
+// 		EmployeeInterface empController = new EmployeeController();
+// 		
+// 		List<Employee> listEmp = empController.getAllEmployee();
+// 		for (Employee employee : listEmp) {
+//			System.out.println(employee.getName() + " " + employee.getFirstName());
+//		}
  		
  		
  		
